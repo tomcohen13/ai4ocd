@@ -1,4 +1,4 @@
-# Help Me With My OCD
+# AI4OCD
 A funny app I developed to help combatting undesirable OCD behavior.
 
 The app uses multi-modal LLMs and webcam access to detect behavior as it occurs and notifies the user whenever they engage in it.
