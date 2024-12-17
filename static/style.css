@@ -1,0 +1,240 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap'); */
+/* @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700'); */
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,300);
+
+:root{
+    
+    --dark-color-lightness: 17%;
+    /* --light-color-lightness: 95%; */
+    --light-color-lightness: 75%;
+    --white-color-lightness: 99%;
+
+    --color-white: hsl(255, 30%, var(--white-color-lightness));
+    /* --color-light: hsl(0, 100%, var(--light-color-lightness)); */
+    /* --color-light: hsl(252, 30%, var(--light-color-lightness)); */
+    --color-light: hsl(255, 30%, var(--white-color-lightness));
+    --color-less-light: hsla(0, 0%, 100%, 0.917);
+    --picture-width: 180px;
+    --picture-height: 180px;
+    
+}
+
+body {
+    display: -ms-flexbox;
+    display: -webkit-box;
+    -ms-flex-pack: center;
+    -webkit-box-pack: center;
+    /* justify-content: center; */
+    background-color: var(--color-light);
+    color: var(--color-dark);
+    text-align: center!important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    background-color: hsl(0deg 0% 100% / 73%);
+    font-family: (--bs-font-sans-serif);
+    /* border: 1px; */
+    /* border-radius: 40px; */
+    z-index: 1;
+    overflow-x: hidden;
+    font-family: 'Roboto';
+  }
+
+ul {
+    list-style-type: none;
+}
+
+.nav-bar{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    height:10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.video-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vh;
+}
+
+#symptom-input { 
+    width: 100%;
+    border-radius: 12px;
+    padding: 18px;
+    border:hsl(255, 30%, var(--white-color-lightness));
+    font-size: 24px;
+}
+
+
+.user-input{ 
+    margin: 0 5rem;
+    display: flex;
+    gap: 4vh;
+    color: #000;
+}
+
+
+/* Dropdown Container */
+.dropdown-container {
+    position: relative;
+    width: 100%;
+    text-align: left;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+/* Dropdown Button */
+.dropdown-btn {
+    /* padding: 10px 15px; */
+    background-color: transparent;
+    border: none;
+    /* border-bottom: 2px solid #000; /* Underline only */
+    color: #5a5a5a;
+    font-size: 24px;
+    font-weight: 500;
+    text-transform: capitalize;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    outline: none;
+}
+
+/* Custom Arrow */
+.dropdown-btn::after {
+    content: '▼';
+    font-size: 14px;
+    margin-left: 10px;
+    transition: transform 0.3s ease;
+}
+
+/* Open state arrow rotation */
+.dropdown-btn.open::after {
+    transform: rotate(-180deg);
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+    position: absolute;
+    top: 100%; /* Appears just beneath the button */
+    left: 0;
+    width: 100%;
+    background-color:transparent;
+    overflow: hidden;
+    max-height: 0; /* Collapsed by default */
+    opacity: 0; /* Fully transparent initially */
+    transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out;
+    z-index: 10; /* Keeps it on top */
+}
+
+#dropdownMenu {
+    border: none;
+}
+
+/* Show Dropdown Menu */
+.dropdown-menu.show {
+    max-height: 300px; /* A reasonable height for dropdown */
+    opacity: 1; /* Fully visible */
+}
+
+
+/* Dropdown Options */
+.dropdown-items {
+    color: #5a5a5a;
+    font-size: 24px;
+    font-weight: 500;
+    transition: background-color 0.2s, color 0.2s;
+    padding: .5rem 0;
+}
+
+.dropdown-items:hover {
+    color: #000;
+}
+
+.dropdown-items .disabled {
+
+}
+
+.disabled:hover {
+    cursor: not-allowed;
+}
+
+
+/* Start Button */
+.actions button {
+    position: relative;
+    background-color: transparent; /* No background */
+    border: none;
+    color: #000; /* Black text */
+    font-size: 24px;
+    font-weight: 700;
+    text-transform: uppercase;
+    cursor: pointer;
+    padding: 10px 30px;
+    transition: transform 0.3s ease-in-out; /* Smooth plump effect */
+    outline: none;
+}
+
+/* Top-right and bottom-left borders */
+.actions button::before,
+.actions button::after {
+    content: '';
+    position: absolute;
+    width: 20px; /* Border length */
+    height: 20px; /* Border thickness */
+    border: 3px solid #000; /* Thick black borders */
+    transition: all 0.3s ease-in-out; /* Smooth hover animation */
+}
+
+/* Top-right corner */
+.actions button::before {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+
+/* Bottom-left corner */
+.actions button::after {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+
+/* Hover Effect - Plump */
+.actions button:hover {
+    transform: scale(1.1); /* Slightly expands the button */
+}
+
+/* Hover Effect for borders */
+.actions button:hover::before,
+.actions button:hover::after {
+    width: 30px; /* Expand border length */
+    height: 30px; /* Expand border thickness */
+}
+
+
+/* Header Fade-in */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px); /* Slight upward animation for a magical feel */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#fadeInHeader span {
+    display: inline-block; /* Ensure animation applies letter by letter */
+    opacity: 0; /* Initially invisible */
+}

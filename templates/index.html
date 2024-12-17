@@ -3,130 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Can't Touch This</title>
-    <!-- Favicon -->
-    <link rel="icon" type="image/x-icon" href="/resources/images/favicon.ico">
-    <!-- Scripts -->
-    <script type="module" src="../static/index.js"></script>
-    <!-- Icons -->
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.8/css/solid.css">
-
+    <title>Help Me With My OCD</title>
+    <!-- Main CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fjalla-One"> -->
-    <style>
-        body {
-            background-color: rgb(16 121 139);
-            color: #e7e7e7;
-            font-family: 'Inter', sans-serif;
-        }
-        .navbar {
-            height: 10vh;
-        }
-        .navbar-content {
-            width: 100%;
-        }
-        .navbar-content .logo{
-            margin: 0.5rem;
-            display: flex;
-            justify-content: center;
-        }
-        main {
-            width: 100%;
-            height: 90vh;
-        }
-        main .row {
-            height: 100%;
-        }
-        .left-side {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .left-side .webcam {
-            position: relative;
-            width: fit-content;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-        }
-        .left-side .btn {
-            font-size: 3rem;
-            font-weight: 600;
-            background-color: #e7e7e7;
-            color: rgb(16 121 139);
-            padding: 1.25rem;
-            border-radius: 12px;
-            position: absolute;
-            bottom: 0;
-        }
-        .left-side .webcam img {
-            max-width: 100%;
-        }
-        
-
-        .right-side {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .right-side .session-info {
-
-        }
-        .right-side .session-info .list {
-            list-style-type: none;
-        }
-        .right-side .session-info .list li {
-            margin-bottom: 2rem;
-        }
-        .right-side .session-info .list p {
-            font-size: 2rem;
-            font-weight: 600;
-        }
-    </style>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Stopwatch script -->
+    <script src="{{ url_for('static',filename='dropdown.js') }}" defer></script>
+    <script src="{{ url_for('static',filename='stopwatch.js') }}" defer></script>
+    <script src="{{ url_for('static',filename='header-fade.js') }}" defer></script>
 </head>
 <body>
-    <!-- Nav bar -->
-    <nav class="navbar">
-        <div class="row navbar-content m-1">
-            <div class="col-md-4">
+    <div class="container" style="height: 70%; justify-content: center; align-items: center; display: flex; flex-direction: column;">
+        <div class="row" style="width: 100%">
+            <div class="container col-md-6 " style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div class="user-input d-flex; flex-column">
+                    <h2 id="fadeInHeader"><label for="symptom">What can I help you with today?</label></h2>
+                    <div class="dropdown-container">
+                        <div id="dropdownButton" class="dropdown-btn">Select an Option</div>
+                        <div id="dropdownMenu" class="dropdown-menu hidden">
+                            <div class="dropdown-items" data-value="touching-hair">Touching Hair</div>
+                            <div class="dropdown-items disabled" data-value="biting-nails">Biting Nails (soon...)</div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="actions">
+                    <button id="startSessionBtn">Start</button>
+                    <button id="stopSessionBtn" style="display: none;">Stop</button>
+                </div>
             </div>
-            <div class="col-md-4 logo">
-                <h1>Can't Touch This 🙅‍♂️</h1>
-            </div>
-            <div class="col-md-4 actions">
-                <div class="about-action">
-                    <i class="uil uil-question"></i>
+            <div class="col-md-6 video-section">
+                <div class="video" style="width: 80%; max-width: 350px;">
+                    <video id="webcam" style="width: 100%; border-radius: 24px;" autoplay></video>
+                    <canvas id="canvas" style="display:none;"></canvas>
                 </div>
             </div>
         </div>
-    </nav>
-    <!-- Main Part -->
-    <main>
-        <div class="row">
-            <!-- Left side: Live Web Camera -->
-            <div class="left-side col-md-6">
-                <div class="container webcam">
-                    <button type="button" class="btn" id="start">Start</button>
-                    <button type="button" hidden="true" class="btn" id="stop">Stop</button>
-                    <video hidden="true" autoplay="true" id="video-element"></video>
-                </div>
-            </div>
-            <!-- Right side: Session Info -->
-            <div class="right-side col-md-6">
-                <div class="container session-info">
-                    <ul class="list">
-                        <li class="current-streak">
-                            <p class="">Current Streak: <span id="stopwatch">00:00:00</span></p>
-                        </li>
-                        <li class="times-touched">
-                            <p class=""># Times Touched: <span id="touch-count">0</span></p>
-                        </li>
-                    </ul>
+        <div class="row session-info" style="width: 100%;" hidden>
+            <div class="col-md-12 p-5 d-flex flex-column align-items-center">
+                <div id="current-streak" style="display: flex;flex-direction: row;gap: 5px;">
+                    <p class="">Current Streak: </p>
+                    <span class="digit" id="hr">00</span>
+                    <!-- <span class="txt">Hr</span> -->
+                    <span class="digit" id="min">00</span>
+                    <!-- <span class="txt">Min</span> -->
+                    <span class="digit" id="sec">00</span>
+                    <!-- <span class="txt">Sec</span> -->
                 </div>
             </div>
         </div>
-    </main>
+    </div>
+    <script nonce="{{ nonce }}">
+        document.addEventListener('DOMContentLoaded', function () {
+
+            const video = document.getElementById('webcam');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            const startButton = document.getElementById('startSessionBtn');
+            startButton.addEventListener('click', startSession);
+    
+            const endButton = document.getElementById('stopSessionBtn');
+            endButton.addEventListener('click', stopSession);
+    
+            const currentStreak = document.getElementById("current-streak");
+    
+            // Audio file
+            const audioFilePath = '../static/cant-touch-this.mp3'
+            const audio = new Audio(audioFilePath)
+    
+            let webcamStream = null;
+            let captureInterval = null;
+    
+            function startSession() {
+                // Play audio silently or briefly to unlock it
+                audio.volume = 0; // Set volume to 0 for the initial unlock
+                audio.play().then(() => {
+                    audio.pause();
+                    audio.currentTime = 0; // Reset the audio
+
+                    console.log("Audio unlocked successfully");
+                }).catch(err => {
+                    console.warn("Audio unlock failed:", err);
+                });
+                // Capture image every 2 seconds
+                captureInterval = setInterval(captureImage, 2100);
+                startButton.style.display = "none";
+                endButton.style.display = "inline-block";
+                currentStreak.style.display = "inline-block";
+            }
+    
+            function stopSession() {
+                if (captureInterval) {
+                    clearInterval(captureInterval);
+                    captureInterval = null;
+                    console.log('Image capturing stopped');
+                }
+                startButton.style.display = "inline-block";
+                endButton.style.display = "none";
+            }
+    
+            async function startWebcam() {
+                try {
+                    // Start the webcam stream
+                    webcamStream = await navigator.mediaDevices.getUserMedia({ video: true });
+                    video.srcObject = webcamStream;
+                } catch (error) {
+                    console.error('Error accessing webcam:', error);
+                }
+            }
+    
+            function stopWebcam() {
+                if (webcamStream) {
+                    // Stop all tracks in the stream
+                    webcamStream.getTracks().forEach(track => track.stop());
+                    webcamStream = null;
+                    video.srcObject = null; // Disconnect the video element
+    
+                } else {
+                    console.log('Webcam is not running');
+                }
+            }
+    
+            // Function to play audio
+            function playAudio() {
+                audio.volume = 1;
+                audio.play().catch(err => console.error("Audio play error:", err));
+            }
+    
+            // Function to play audio
+            function pauseAudio() {
+                audio.pause();
+            }
+    
+            // HTML setup
+            const statusElement = document.createElement('p'); // To show the status message
+    
+            async function captureImage() {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+    
+                const imageData = canvas.toDataURL('image/jpeg');
+    
+                try {
+                    const response = await fetch('/process-image', {
+                        method: 'POST',
+                        body: JSON.stringify({ image: imageData }),
+                        headers: { 'Content-Type': 'application/json' }
+                    });
+    
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+    
+                    const result = await response.json();
+                    console.log(result.message)
+    
+                    // Handle "yes" or "no" response
+                    if (result.message === "Yes.") {
+                        document.body.style.backgroundColor = "salmon"; // Change background to red
+                        statusElement.textContent = "Behavior detected: Yes!";
+                        playAudio()
+                        resetStopwatch()    
+                    } else {
+                        document.body.style.backgroundColor = "white"; // Change background to red
+                    }
+                } catch (error) {
+                    console.error('Error:', error);
+                    statusElement.textContent = `Error: ${error.message}`;
+                }
+            }
+    
+            startWebcam();
+        });
+    </script>
 </body>
 </html>

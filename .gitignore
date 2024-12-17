@@ -1,6 +1,64 @@
-.cache
-node_modules
-dist
-.DS_Store
-constant.py
+# Environment Variables
+.env
+
+# Compiled Python Files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.db
+
+# Development Logs and Debug Files
+*.log
+*.sqlite3
+
+# Flask File Uploads (Optional)
+static/uploads/*
+
+# Ignore all static uploads, except a "keep" file
+!static/uploads/.keep
+
+
+# Ignore old files
+templates/index_old.html
+logs/
+src/
+resources/
+
+
+# Virtual Environments
 venv/
+ENV/
+*.env
+*.venv
+pip-log.txt
+pip-delete-this-directory.txt
+
+# IDE and Editor Files
+.vscode/
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# OS-Specific Files
+.DS_Store
+Thumbs.db
+
+# Python Build Artifacts
+build/
+dist/
+*.egg-info/
+
+# Node Modules (if you're integrating frontend tools)
+node_modules/
+
+# Git Files
+.gitignore
+
+# Docker Files (if applicable)
+docker-compose.override.yml
+*.dockerfile
+
+# Secrets (Optional - to avoid hardcoding tokens or keys)
+secrets.json

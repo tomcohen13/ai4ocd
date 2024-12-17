@@ -1,2 +1,3 @@
-# stop-touching-your-hair
-An AI assistant that should help me stop touching my hair when stressed :)
+# Help Me with My OCD
+A simple AI assistant that helps with compulsive behavior by identifying and intervening as it happens.
+
