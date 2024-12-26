@@ -17,6 +17,10 @@
     
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     display: -ms-flexbox;
     display: -webkit-box;
@@ -247,4 +251,10 @@ ul {
 
 #p2 .container {
     height: 100%;
+}
+
+.bounce {
+    -moz-animation: bounce 4s infinite;
+    -webkit-animation: bounce 4s infinite;
+    animation: bounce 4s infinite;
 }
