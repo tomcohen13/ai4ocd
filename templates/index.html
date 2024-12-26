@@ -16,44 +16,73 @@
     <script src="{{ url_for('static',filename='header-fade.js') }}" defer></script>
 </head>
 <body>
-    <div class="container" style="height: 70%; justify-content: center; align-items: center; display: flex; flex-direction: column;">
-        <div class="row" style="width: 100%">
-            <div class="container col-md-6 " style="display: flex; flex-direction: column; justify-content: space-between;">
-                <div class="user-input d-flex; flex-column">
-                    <h2 id="fadeInHeader"><label for="symptom">What can I help you with today?</label></h2>
-                    <div class="dropdown-container">
-                        <div id="dropdownButton" class="dropdown-btn">Select an Option</div>
-                        <div id="dropdownMenu" class="dropdown-menu hidden">
-                            <div class="dropdown-items" data-value="touching-hair">Touching Hair</div>
-                            <div class="dropdown-items disabled" data-value="biting-nails">Biting Nails (soon...)</div>
+    <div class="page" id="p1">
+        <div class="container" style="height: 70%; justify-content: center; align-items: center; display: flex; flex-direction: column;">
+            <div class="row" style="width: 100%">
+                <div class="container col-md-6 " style="display: flex; flex-direction: column; justify-content: space-between;">
+                    <div class="user-input d-flex; flex-column">
+                        <h2 id="fadeInHeader"><label for="symptom">What can I help you with today?</label></h2>
+                        <div class="dropdown-container">
+                            <div id="dropdownButton" class="dropdown-btn">Select an Option</div>
+                            <div id="dropdownMenu" class="dropdown-menu hidden">
+                                <div class="dropdown-items" data-value="touching-hair">Touching Hair</div>
+                                <div class="dropdown-items disabled" data-value="biting-nails">Biting Nails (soon...)</div>
+                            </div>
                         </div>
+    
                     </div>
-
+                    <div class="actions">
+                        <button id="startSessionBtn">Start</button>
+                        <button id="stopSessionBtn" style="display: none;">Stop</button>
+                    </div>
                 </div>
-                <div class="actions">
-                    <button id="startSessionBtn">Start</button>
-                    <button id="stopSessionBtn" style="display: none;">Stop</button>
+                <div class="col-md-6 video-section">
+                    <div class="video" style="width: 80%; max-width: 350px;">
+                        <video id="webcam" style="width: 100%; border-radius: 24px;" autoplay></video>
+                        <canvas id="canvas" style="display:none;"></canvas>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 video-section">
-                <div class="video" style="width: 80%; max-width: 350px;">
-                    <video id="webcam" style="width: 100%; border-radius: 24px;" autoplay></video>
-                    <canvas id="canvas" style="display:none;"></canvas>
+            <div class="row session-info" style="width: 100%;" hidden>
+                <div class="col-md-12 p-5 d-flex flex-column align-items-center">
+                    <div id="current-streak" style="display: flex;flex-direction: row;gap: 5px;">
+                        <p class="">Current Streak: </p>
+                        <span class="digit" id="hr">00</span>
+                        <!-- <span class="txt">Hr</span> -->
+                        <span class="digit" id="min">00</span>
+                        <!-- <span class="txt">Min</span> -->
+                        <span class="digit" id="sec">00</span>
+                        <!-- <span class="txt">Sec</span> -->
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="row session-info" style="width: 100%;" hidden>
-            <div class="col-md-12 p-5 d-flex flex-column align-items-center">
-                <div id="current-streak" style="display: flex;flex-direction: row;gap: 5px;">
-                    <p class="">Current Streak: </p>
-                    <span class="digit" id="hr">00</span>
-                    <!-- <span class="txt">Hr</span> -->
-                    <span class="digit" id="min">00</span>
-                    <!-- <span class="txt">Min</span> -->
-                    <span class="digit" id="sec">00</span>
-                    <!-- <span class="txt">Sec</span> -->
-                </div>
-            </div>
+    </div>
+    <div class="page" id="p2">
+        <div class="container" style="height: 100%; justify-content: center; align-items: center; display: flex; flex-direction: column; gap: 20px;">
+            <h2>The Story</h2>
+            <h4 class="story-text">
+                When I was in college, I got mugged one night on my way home. 
+                Traditional therapy helped me overcome all but one, seemingly benign PTSD symptom: 
+                Like squeezing a stress ball, I’d mess with my hair compulsively when engaged in a stressful or mentally-demanding task.
+                At first, it didn't bother me at all. But as time went on, it became a problem.
+                I’d catch myself doing it in the middle of a meeting, in conversations, or even while driving. 
+                I searched every corner of the web, tried every suggestion; nothing helped.
+                Days became weeks; weeks became months. Almost two years passed, I was still stuck with it.
+            </h4>
+            <h4 class="story-text">
+                During my last semester, I had the opportunity to work on an app that combined my two passions - AI and Psychology.
+                Using machine learning and nudge theory, the app helped +1200 of Columbia seniors notice, get noticed by, and match with their crushes.
+                The surprising efficacy of the app sparked a thought, “Why not use the same technology to help myself?”
+            </h4>
+            <h4 class="story-text">
+                So, I built this app. 
+                It uses your webcam to captures photos in real time, 
+                sends them to a large vision model that I trained to detect an array of complusive behaviors, 
+                and it plays a funny sound to alert you whenever you engage in one.
+                I cannot guarantee that it will work for you, but it sure did for me.
+                If you have any suggestions or feedback, feel free to reach out to me at tomco [at] mit [dot] edu
+            </h4>
         </div>
     </div>
     <script nonce="{{ nonce }}">
