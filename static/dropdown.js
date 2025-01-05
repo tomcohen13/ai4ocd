@@ -8,13 +8,15 @@ dropdownButton.addEventListener('click', () => {
     dropdownButton.classList.toggle('open');
 });
 
+window.selectedSymptom = null;
+
 // Handle option selection
 dropdownItems.forEach(item => {
     item.addEventListener('click', (event) => {
 
         if (item.classList.contains('disabled')) return;
 
-        const selectedValue = event.target.getAttribute('data-value');
+        window.selectedSymptom = event.target.getAttribute('data-value');
         const selectedText = event.target.textContent;
 
         // Update button text with the selected option

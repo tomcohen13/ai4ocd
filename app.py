@@ -6,7 +6,7 @@ from flask_limiter.util import get_remote_address
 
 from dotenv import load_dotenv
 
-from model_api import query_llm
+from model_api import SYMPTOM_CODE_TO_DESC, query_llm
 from utils import process_image_for_llm
 
 
@@ -58,10 +58,22 @@ def create_app():
     def process_image():
         try:
             # Parse the image data from the request
-            data = request.json['image']
-            processed_image_base64 = process_image_for_llm(data)
-            # Send to model
-            response = query_llm(processed_image_base64).message.content
+            data = request.json
+            
+            # Validate the image
+            image = data.get('image')
+            if not image or not image.startswith("data:image/"):
+                return jsonify({"error": "Invalid image format"}), 400
+            
+            # Validate the symptom
+            symptom = data.get('symptom')
+            valid_symptoms = SYMPTOM_CODE_TO_DESC.keys()
+            if symptom not in valid_symptoms:
+                return jsonify({"error": "Invalid symptom selected"}), 400
+
+            # If both inputs seem valid, send to model
+            processed_image_base64 = process_image_for_llm(image)
+            response = query_llm(processed_image_base64, symptom_code=symptom).message.content
             # Respond to the frontend
             return jsonify({"message": response})
         except Exception as e:
