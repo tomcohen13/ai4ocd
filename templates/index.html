@@ -25,8 +25,9 @@
                         <div class="dropdown-container">
                             <div id="dropdownButton" class="dropdown-btn">Select an Option</div>
                             <div id="dropdownMenu" class="dropdown-menu hidden">
-                                <div class="dropdown-items" data-value="touching-hair">Touching Hair</div>
-                                <div class="dropdown-items disabled" data-value="biting-nails">Biting Nails (soon...)</div>
+                                <div class="dropdown-items" data-value="hair-touching">Touching Hair <p class="">(trichotillomania)</p></div>
+                                <div class="dropdown-items" data-value="nail-biting">Biting Nails</div>
+                                <div class="dropdown-items" data-value="face-touching">Touching Face</div>
                             </div>
                         </div>
     
@@ -57,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <a href="#p2" style="text-decoration: none; color: black; font-weigh: 400;">
+        <a href="#p2" style="text-decoration: none; color: black; font-weight: 400;">
             <div class="bounce" style="position: absolute; bottom: 15px; left: 47%; cursor: pointer;">
                 <p class="my-0">Read the Story</p>
                 <i class="fa fa-angle-down" style="font-size: 48px; color: #2b2b2b;"></i>
@@ -172,11 +173,22 @@
             function pauseAudio() {
                 audio.pause();
             }
+
+            function validateInput(symptom) {
+                const validSymptoms = ["hair-touching", "nail-biting", "face-touching"]; // Add valid symptom keys
+                return validSymptoms.includes(symptom);
+            }
     
             // HTML setup
             const statusElement = document.createElement('p'); // To show the status message
     
             async function captureImage() {
+                const selectedSymptom = window.selectedSymptom;
+
+                if (!validateInput(selectedSymptom)) {
+                    console.warn("Invalid symptom selected!");
+                    return;
+                }
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
@@ -186,7 +198,10 @@
                 try {
                     const response = await fetch('/process-image', {
                         method: 'POST',
-                        body: JSON.stringify({ image: imageData }),
+                        body: JSON.stringify({
+                            image: imageData,
+                            symptom: selectedSymptom,
+                        }),
                         headers: { 'Content-Type': 'application/json' }
                     });
     
@@ -204,7 +219,7 @@
                         playAudio()
                         resetStopwatch()    
                     } else {
-                        document.body.style.backgroundColor = "white"; // Change background to red
+                        document.body.style.backgroundColor = "white";
                     }
                 } catch (error) {
                     console.error('Error:', error);

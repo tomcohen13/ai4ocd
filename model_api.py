@@ -11,15 +11,27 @@ client = OpenAI(
     base_url = "https://api.llama-api.com"
 )
 
+SYMPTOM_CODE_TO_DESC = {
+    "hair-touching": "touching their hair",
+    "face-touching": "touching their face",
+    "nail-biting": "biting their nails",
+    "phone-checking": "looking at their phone",
+}
+
 PROMPT = """
 You are a helpful assistant, specializing in detecting behavior from images.
 The following image is taken from a user webcam. The user is trying to eliminate symptomatic behavior
-of hair touching, and you need to help them. Your task is to decide if they are touching their hair in the image.
+of {symptom_code}, and you need to help them. Your task is to decide if they are {desc} in the image.
 Answer with one word: 'yes' or 'no'
 """
 
 
-def query_llm(base64_image):
+def query_llm(base64_image, symptom_code: str):
+
+    if symptom_code not in SYMPTOM_CODE_TO_DESC:
+        raise ValueError(f"Invalid symptom code: {symptom_code}")
+    
+    prompt_for_symptom = PROMPT.format(symptom_code=symptom_code, desc=SYMPTOM_CODE_TO_DESC[symptom_code])
     response = client.chat.completions.create(
         # model="gpt-4o-mini", # we'll see about that one..
         model="llama3.2-90b-vision",
@@ -28,7 +40,7 @@ def query_llm(base64_image):
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": PROMPT},
+                    {"type": "text", "text": prompt_for_symptom},
                     {
                         "type": "image_url",
                         "image_url": {
