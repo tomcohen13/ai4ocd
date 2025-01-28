@@ -22,7 +22,7 @@ PROMPT = """
 You are a helpful assistant, specializing in detecting behavior from images.
 The following image is taken from a user webcam. The user is trying to eliminate symptomatic behavior
 of {symptom_code}, and you need to help them. Your task is to decide if they are {desc} in the image.
-Answer with one word: 'yes' or 'no'
+Answer with one word: 'yes' or 'no'. Answer yes only if you are certain the person is {desc}.
 """
 
 
